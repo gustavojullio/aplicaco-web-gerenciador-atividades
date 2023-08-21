@@ -1,0 +1,60 @@
+<h2>Alteração de Atividade</h2>
+<form class="row g-3" method='POST' action='/atividade/altera/{{atividade._id}}'>
+
+    <p hidden><input type='text' class="form-control" name='_id' value="{{atividade._id}}" size="30" readonly/></p>
+
+    <div class="col-9">
+        <label for="titulo" class="form-label">Título</label>
+        <input type='text' class="form-control" name='titulo' value="{{atividade.titulo}}" size="60"/>
+    </div>
+
+    <div class="col-3">
+        <label for="prioridade" class="form-label">Prioridade da Atividade</label>
+        <select name="prioridade" id="prioridade" class="form-select">
+
+            {{#if prioridadeAlta}}
+                <option value="Alta" selected>Alta</option>
+            {{else}}
+                <option value="Alta">Alta</option>
+            {{/if}}
+
+            {{#if prioridadeMedia}}
+                <option value="Média" selected>Média</option>
+            {{else}}
+                <option value="Média">Média</option>
+            {{/if}}
+
+            {{#if prioridadeBaixa}}
+                <option value="Baixa" selected>Baixa</option>
+            {{else}}
+                <option value="Baixa">Baixa</option>
+            {{/if}}
+        </select>
+    </div>
+
+ 
+    <div class="col-12">
+        <label for="texto" class="form-label">Descrição da Atividade</label>
+        <textarea class="form-control" rows="5" cols="57" name='texto'>{{atividade.texto}}</textarea>
+    </div>
+
+    <p hidden><input type='text' class="form-control" name='data' value="{{atividade.data}}" size="30" readonly /></p>
+
+
+    <div class="col-12">
+        <div class="form-check">
+            {{#if atividade.executada}}
+                <input type="checkbox" class="form-check-input" name="status" id="status" checked/>
+            {{else}}
+                <input type="checkbox" class="form-check-input" name="status" id="status"/>
+            {{/if}}
+                <label for="status" class="form-check-label">Atividade Executada</label>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <a href="/"><button type="button" class="btn btn-secondary">Cancelar</button></a>
+        <button type="submit" class="btn btn-primary">Alterar</button>
+    </div>
+     
+</form>

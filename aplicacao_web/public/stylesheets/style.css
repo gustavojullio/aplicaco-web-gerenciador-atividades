@@ -1,0 +1,71 @@
+body {
+  font-family: 'Prompt', sans-serif;
+}
+
+:root {
+  --view: #9e60cf;
+  --edit: #e5b768;
+  --delete: #da4f91;
+  --bg-menu: #e0e0e0;
+  --font-menu: #333333;
+  --outro: #77c094;
+  --link-font: #5CAECC;
+}
+
+a {
+  color: var(--delete);
+}
+
+a:hover {
+  color: var(--view);
+}
+
+
+.bg-menu {
+  background-color: var(--bg-menu);
+  margin-bottom: 35px;
+}
+
+div > div > p {
+  margin: 0;
+}
+
+.img-logo{
+ width: 10%;
+}
+
+.nav-color {
+  color: var(--font-menu);
+}
+
+.bi-eye-fill, .bi-2-circle-fill {
+  color: var(--view);
+}
+
+.bi-1-circle-fill {
+  color: var(--link-font);
+}
+
+.bi-pencil-square {
+  color: var(--edit);
+}
+
+.bi-trash3-fill, .bi-3-circle-fill {
+  color: var(--delete);
+}
+
+.bi-check-circle-fill, .bi-circle {
+  color: var(--outro);
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+.thead {
+  background-color: var(--bg-menu);
+}
+
+.operation {
+  margin-left: 2px;
+  margin-right: 2px;
+}

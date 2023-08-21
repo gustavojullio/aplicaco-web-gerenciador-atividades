@@ -1,0 +1,155 @@
+{{#if atividades.length}}
+
+  <div class="modal fade" id="modal-atividade" index="-1" aria-labelledby="modal-atividadeLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-atividadeLabel"><strong>Exclusão de Atividade</strong></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir a atividade "<span id="modal-activity-title"></span>"?</p>
+        </div>
+        <div class="modal-footer">
+          <a id="delete-button" href=""><button type="button" class="btn btn-danger">Excluir</button></a>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row thead">
+    <div class="col-lg-2 d-none d-lg-block border rounded-1">
+      <p class="text-center">Alterar Status</p>
+    </div>
+
+    <div class="col-lg-1 d-none d-lg-block border rounded-1">
+      <p class="text-center">Prioridade</p>
+    </div>
+
+    <div class="col-7 col-lg-6 d-block border rounded-1">
+      <p class="text-center">Atividade</p>
+    </div>
+
+    <div class="col-5 col-lg-3 d-block  border rounded-1">
+      <p class="text-center">Operações</p>
+    </div>
+  </div>
+
+  {{#each atividades}}
+    {{#if this.executada}}
+      <div class="row">
+        <div class="col-lg-2 d-none d-lg-block border rounded-1">
+          <p class="text-center"><a href="/atividade/naoexecutada/{{this._id}}"><i class="bi bi-circle"></i></a></p>
+        </div>
+
+        <div class="col-lg-1 d-none d-lg-block border rounded-1">
+          <p class="text-center"> 
+            {{#if this.prioridadeAlta}}
+              <a href="#" onclick="alteraPrioridade('{{this._id}}', '{{this.prioridade}}')"><i class="bi bi-1-circle-fill"></i></a>
+            {{else}}
+              {{#if this.prioridadeMedia}}
+                <a href="#" onclick="alteraPrioridade('{{this._id}}', '{{this.prioridade}}')"><i class="bi bi-2-circle-fill"></i></a>
+              {{else}}
+                <a href="#" onclick="alteraPrioridade('{{this._id}}', '{{this.prioridade}}')"><i class="bi bi-3-circle-fill"></i></a>
+              {{/if}}
+            {{/if}}
+          </p>
+        </div>
+
+        <div class="col-7 col-lg-6 d-block border rounded-1">
+          <p>{{this.titulo}}</p>
+        </div>
+
+        <div class="col-5 col-lg-3 d-block  border rounded-1">
+          <p class="text-center">
+            <a href="/atividade/consulta/{{this._id}}"><i class="bi bi-eye-fill operation"></i></a>
+            <a href="/atividade/altera/{{this._id}}"><i class="bi bi-pencil-square operation"></i></a>
+            <a href="#" class="delet-link" data-bs-toggle="modal" data-bs-target="#modal-atividade" data-titulo="{{this.titulo}}"
+              data-_id="{{this._id}}"><i class="bi bi-trash3-fill operation"></i></a>
+          </p>
+        </div>
+      </div>
+    {{else}}
+      <div class="row">
+        <div class="col-lg-2 d-none d-lg-block border rounded-1">
+          <p class="text-center"><a href="/atividade/executada/{{this._id}}"><i class="bi bi-check-circle-fill"></i></a></p>
+        </div>
+
+        <div class="col-lg-1 d-none d-lg-block border rounded-1">
+          <p class="text-center"> 
+            {{#if this.prioridadeAlta}}
+              <a href="#" onclick="alteraPrioridade('{{this._id}}', '{{this.prioridade}}')"><i class="bi bi-1-circle-fill"></i></a>
+            {{else}}
+              {{#if this.prioridadeMedia}}
+                <a href="#" onclick="alteraPrioridade('{{this._id}}', '{{this.prioridade}}')"><i class="bi bi-2-circle-fill"></i></a>
+              {{else}}
+              <a href="#" onclick="alteraPrioridade('{{this._id}}', '{{this.prioridade}}')"><i class="bi bi-3-circle-fill"></i></a>
+              {{/if}}
+            {{/if}}
+          </p>
+        </div>
+
+        <div class="col-7 col-lg-6 d-block border rounded-1">
+          <p><b>{{this.titulo}}</b></p>
+        </div>
+
+        <div class="col-5 col-lg-3 d-block  border rounded-1">
+          <p class="text-center">
+            <a href="/atividade/consulta/{{this._id}}"><i class="bi bi-eye-fill operation"></i></a>
+            <a href="/atividade/altera/{{this._id}}"><i class="bi bi-pencil-square operation"></i></a>
+            <a href="#" class="delet-link" data-bs-toggle="modal" data-bs-target="#modal-atividade" data-titulo="{{this.titulo}}"
+              data-_id="{{this._id}}"><i class="bi bi-trash3-fill operation"></i></a>
+          </p>
+        </div>
+      </div>
+    {{/if}}
+  {{/each}}
+{{else}}
+  <br>
+  <br>
+  <br>
+  <h4><strong>Ainda não há nenhuma atividade cadastrada!</strong></h4>
+  <br>
+  <a href="/atividade/cria">Cadastre sua primeira Atividade</a>
+{{/if}}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var deleteLinks = document.querySelectorAll('.delet-link');
+    deleteLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        var tituloAtividade = link.dataset.titulo;
+        var elementoTituloModal = document.getElementById('modal-activity-title');
+        elementoTituloModal.textContent = tituloAtividade;
+
+        var _idAtividade = link.dataset._id;
+        var deleteButton = document.getElementById('delete-button');
+        deleteButton.href = '/atividade/deleta/' + _idAtividade;
+      });
+    });
+  });
+
+  function alteraPrioridade(_id, prioridade) {
+    console.log('Função alteraPrioridade foi chamada.');
+
+    var url = '/atividade/alteraPrioridade/' + _id + '/' + prioridade;
+
+    fetch(url, {
+      method: 'GET'
+    })
+    .then(response => {
+      if (response.ok) {
+        console.log('Prioridade alterada com sucesso.');
+        location.reload(); 
+      } else {
+        console.error('Erro ao alterar a prioridade da atividade.');
+      }
+    })
+    .catch(error => {
+      console.error('Ocorreu um erro durante a solicitação:', error);
+    });
+  }
+</script>
